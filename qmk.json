@@ -1,4 +1,11 @@
 {
-    "userspace_version": "1.0",
-    "build_targets": []
+    "userspace_version": "1.1",
+    "build_targets": [
+        ["mechwild/murphpad", "milesdm"],
+        ["dz60", "milesdm"],
+        ["mechwild/mercutio", "milesdm"],
+        ["gmmk/pro/rev1/ansi", "milesdm"],
+        ["kbdfans/kbd75/rev1", "milesdm"],
+        ["keyhive/maypad", "milesdm"]
+    ]
 }
