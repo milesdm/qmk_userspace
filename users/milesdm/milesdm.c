@@ -1,41 +1,57 @@
 #ifdef RGBLIGHT_ENABLE
-void keyboard_post_init_user(void) {
-    RGB_user_wants_enabled = rgblight_config.enable;
-    RGB_current_mode = rgblight_config.mode;
-    RGB_current_hue  = rgblight_config.hue;
-    RGB_current_sat  = rgblight_config.sat;
-    RGB_current_val  = rgblight_config.val;
+// Helper function to apply colors and effects based on current layer state
+void update_underglow_state(void) {
+    if (host_keyboard_led_state().caps_lock) {
+        return;
+    }
+
+    if (layer_state_is(2)) {
+        rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING); 
+        rgblight_setrgb_noeeprom(MILES_LAYER2_COLOR);
+    } else if (layer_state_is(1)) {
+        rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING); 
+        rgblight_setrgb_noeeprom(MILES_LAYER1_COLOR);
+    } else {
+        rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+        rgblight_setrgb_noeeprom(MILES_COLOR);
+    }
 }
 
-// Restore user settings
-void restore_user_rgb_settings(void) {
-    // First, enable RGB
-    if (RGB_user_wants_enabled && !rgblight_config.enable) {
-        rgblight_enable();
-    } else if (!RGB_user_wants_enabled && rgblight_config.enable) {
-        rgblight_disable();
+// 1. Set initial state on boot
+void keyboard_post_init_user(void) {
+    rgblight_enable_noeeprom(); 
+    update_underglow_state();
+}
+
+// 2. Trigger color and effect updates when layers shift
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (host_keyboard_led_state().caps_lock) {
+        return state;
     }
 
-    // Restore settings
-    rgblight_sethsv(RGB_current_hue, RGB_current_sat, RGB_current_val); // Restore underglow RGB color
-    rgblight_mode(RGB_current_mode); // Restore RGB mode
-};
-
-void toggle_rgb_caps_lock(bool isActive) {
-    if (rgblight_config.enable) {
-        if (isActive) {
-            // Set underglow color if CAPS_LOCK enabled
-            rgblight_sethsv(MILES_COLOR_CAPS);
-            rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING +3);
-        } else {
-            restore_user_rgb_settings();
-        }
+    if (layer_state_cmp(state, 2)) {
+        rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING);
+        rgblight_setrgb_noeeprom(MILES_LAYER2_COLOR);
+    } else if (layer_state_cmp(state, 1)) {
+        rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING);
+        rgblight_setrgb_noeeprom(MILES_LAYER1_COLOR);
+    } else {
+        rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+        rgblight_setrgb_noeeprom(MILES_COLOR);
     }
 
-};
+    return state;
+}
 
+// 3. Trigger color updates when Caps Lock toggles
 bool led_update_user(led_t led_state) {
-    toggle_rgb_caps_lock(led_state.caps_lock);
+    if (led_state.caps_lock) {
+        rgblight_mode_noeeprom(RGBLIGHT_MODE_BREATHING); 
+        rgblight_setrgb_noeeprom(MILES_CAPS_COLOR); 
+    } else {
+        update_underglow_state();
+    }
     return true;
-};
+}
+
 #endif

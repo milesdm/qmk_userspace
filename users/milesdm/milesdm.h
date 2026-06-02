@@ -24,5 +24,7 @@ const uint32_t PROGMEM unicode_map[] = {
 #define KC_CAD	LALT(LCTL(KC_DEL))
 #define KC_SLSF LSFT_T(KC_SLSH)
 
-#define MILES_COLOR 30, 218, 118
-#define MILES_COLOR_CAPS 0, 0, 118
+#define MILES_COLOR 0xFF, 0x00, 0x00  // Red
+#define MILES_CAPS_COLOR 0x00, 0x00, 0xFF // Blue
+#define MILES_LAYER1_COLOR 0x00, 0xFF, 0x00 // Green
+#define MILES_LAYER2_COLOR 0x80, 0x00, 0x80 // Purple
