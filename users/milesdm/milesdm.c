@@ -1,6 +1,6 @@
 #include "quantum.h"
 
-#why am I needing this is c and h?
+//why am I needing this is c and h?
 enum custom_keycodes {
     SHRUG = SAFE_RANGE
 };
