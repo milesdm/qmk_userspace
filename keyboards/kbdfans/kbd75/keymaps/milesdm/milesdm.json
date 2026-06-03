@@ -148,7 +148,7 @@
       "ANY(UC(ROFLA))",
       "ANY(UC(ROFLB))",
       "ANY(UC(FP))",
-      "KC_TRNS",
+      "ANY(SHRUG)",
       "KC_TRNS",
       "KC_TRNS",
       "KC_TRNS",
@@ -159,7 +159,7 @@
       "ANY(UC_WINC)",
       "ANY(UC_LINX)",
       "ANY(UC_MAC)",
-      "KC_TRNS",
+      "KC_MUTE",
       "KC_TRNS",
       "KC_TRNS",
       "KC_TRNS",
@@ -177,7 +177,7 @@
       "KC_TRNS"
     ],
     [
-      "KC_NO",
+      "TO(0)",
       "KC_NO",
       "KC_NO",
       "KC_NO",
@@ -259,7 +259,7 @@
       "KC_NO",
       "KC_NO",
       "KC_NO",
-      "TO(0)"
+      "KC_NO"
     ]
   ],
   "author": ""
